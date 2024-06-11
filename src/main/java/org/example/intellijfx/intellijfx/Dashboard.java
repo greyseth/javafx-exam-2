@@ -42,6 +42,9 @@ public class Dashboard {
     Button addProductButton;
 
     @FXML
+    Button inventoryRequestButton;
+
+    @FXML
     private Label userAddressDisplay;
 
     @FXML
@@ -94,6 +97,7 @@ public class Dashboard {
                 transactionButton.setVisible(true);
                 masterButton.setVisible(true);
                 stocksButton.setVisible(true);
+                inventoryRequestButton.setVisible(true);
             }
 
             if (user.getRole().equals("Admin")) {
