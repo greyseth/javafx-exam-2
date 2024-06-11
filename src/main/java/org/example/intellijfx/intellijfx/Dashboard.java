@@ -155,4 +155,9 @@ public class Dashboard {
     void masterAction(ActionEvent event) throws IOException {
         Tools.changeScene(event, "inventory-list.fxml");
     }
+
+    @FXML
+    void inventoryRequestAction(ActionEvent event) throws IOException {
+        Tools.changeScene(event, "request-list.fxml");
+    }
 }

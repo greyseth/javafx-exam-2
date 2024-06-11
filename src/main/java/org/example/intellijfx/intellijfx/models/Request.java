@@ -6,13 +6,15 @@ public class Request {
     String reason;
     String requestDate;
     String status;
+    String requester;
 
-    public Request(int requestId, int productId, String reason, String requestDate, String status) {
+    public Request(int requestId, int productId, String reason, String requestDate, String status, String requester) {
         this.requestId = requestId;
         this.productId = productId;
         this.reason = reason;
         this.requestDate = requestDate;
         this.status = status;
+        this.requester = requester;
     }
 
     public int getRequestId() {
@@ -53,5 +55,13 @@ public class Request {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRequester() {
+        return requester;
+    }
+
+    public void setRequester(String requester) {
+        this.requester = requester;
     }
 }

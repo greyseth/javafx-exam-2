@@ -4,15 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import org.example.intellijfx.intellijfx.data.LoginManager;
 import org.example.intellijfx.intellijfx.models.JDBC;
+import org.example.intellijfx.intellijfx.models.Tools;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,7 +47,20 @@ public class AddRequest {
                 }
 
                 if (hasContent) {
-//                    Button
+                    rs.beforeFirst();
+                    while(rs.next()) {
+                        int productId = rs.getInt("product_id");
+                        String name = rs.getString("name");
+
+                        Button addButton = new Button(name);
+                        addButton.setOnAction(e -> {
+                            selectedItemId = productId;
+                            productSelectDisplay.setText(name);
+                            productSelectPane.setVisible(false);
+                        });
+
+                        productSelectContainer.getChildren().add(addButton);
+                    }
                 }
             }catch(SQLException e) {e.printStackTrace();}
         }
@@ -64,11 +77,12 @@ public class AddRequest {
         statuses.add("accepted");
         statuses.add("denied");
         statusInput.setItems(statuses);
+        statusInput.setValue("pending");
     }
 
     @FXML
     void goBack(ActionEvent event) throws IOException {
-
+        Tools.changeScene(event, "request-list.fxml");
     }
 
     @FXML
@@ -83,11 +97,51 @@ public class AddRequest {
 
     @FXML
     void clearForm() {
-
+        selectedItemId = -1;
+        productSelectDisplay.setText("");
+        reasonInput.setValue("");
+        reasonOtherInput.setText("");
+        statusInput.setValue("");
     }
 
     @FXML
     void saveAction() {
+        String reason = reasonInput.getValue();
+        String reasonOther = reasonOtherInput.getText();
+        String status = statusInput.getValue();
 
+        if (selectedItemId == -1 || reason.isEmpty() || status.isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Semua field harus terisi!");
+            a.showAndWait();
+
+            return;
+        }
+
+        if (JDBC.getConnection().isPresent()) {
+            try {
+                String query = "INSERT INTO request(product_id, reason, request_date, status, user_id) VALUES(?, ?, CURRENT_DATE(), ?, ?);";
+                PreparedStatement ps = JDBC.getConnection().get().prepareStatement(query);
+                ps.setInt(1, selectedItemId);
+                ps.setString(2, reason.equals("Out of Stock")||reason.equals("Low on Item")?reason:reasonOther);
+                ps.setString(3, status);
+                ps.setInt(4, LoginManager.loggedIn.get().getUserId());
+
+                int affectedRows = ps.executeUpdate();
+
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setContentText("Berhasil menambahkan permintaan");
+                a.showAndWait();
+            }catch(SQLException e) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Gagal menambahkan permintaan");
+                a.showAndWait();
+                e.printStackTrace();
+            }
+        }else {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Tidak bisa menghubungi database");
+            a.showAndWait();
+        }
     }
 }
