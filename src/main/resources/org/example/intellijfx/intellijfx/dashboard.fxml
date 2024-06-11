@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.intellijfx.intellijfx.Dashboard">
+    <top>
+        <FlowPane fx:id="header" alignment="CENTER_RIGHT" columnHalignment="CENTER" hgap="15.0" maxHeight="50.0" prefHeight="4.0" prefWidth="600.0" style="-fx-background-color: lightblue;;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="profileButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#profileAction" text="Profile" textAlignment="CENTER">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+            <Button fx:id="logoutButton1" alignment="CENTER" contentDisplay="CENTER" layoutX="542.0" layoutY="25.0" mnemonicParsing="false" onAction="#logoutAction" text="Log Out" textAlignment="CENTER">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+        </FlowPane>
+    </top>
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="342.0" prefWidth="150.0" spacing="15.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+         <children>
+            <Button fx:id="masterButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#masterAction" text="Master" visible="false" />
+            <Button fx:id="transactionButton" alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="25.0" mnemonicParsing="false" onAction="#transactionAction" text="Transaction" visible="false" />
+            <Button fx:id="stocksButton" alignment="CENTER" contentDisplay="CENTER" layoutX="30.0" layoutY="66.0" mnemonicParsing="false" onAction="#manageStocksAction" text="Mange Stocks" visible="false" />
+            <Button fx:id="addProductButton" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="107.0" mnemonicParsing="false" onAction="#addProductAction" text="All Products" visible="false" />
+            <Button fx:id="addAccountButton" alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="148.0" mnemonicParsing="false" onAction="#addAccountAction" text="All Accounts" visible="false" />
+         </children></VBox>
+   </left>
+   <center>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane fx:id="welcomePanel" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" vgap="15.0">
+               <children>
+                  <Label fx:id="welcomeText" text="Selamat Datang, YOUR NAME">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="156.0" layoutY="172.0" text="Sistem Pembelian Barang akan lebih memudahkan anda dalam melakukan transaksi" />
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="profilePanel" alignment="TOP_CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" vgap="10.0" visible="false">
+               <children>
+                  <ImageView fx:id="accImage" fitHeight="85.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                     <FlowPane.margin>
+                        <Insets bottom="25.0" />
+                     </FlowPane.margin>
+                  </ImageView>
+                  <Label fx:id="userIdDisplay" layoutX="182.0" layoutY="131.0" text="User ID: 000" />
+                  <Label fx:id="userNameDisplay" text="Name: YOUR NAME" />
+                  <Label fx:id="userEmailDisplay" layoutX="182.0" layoutY="120.0" text="Email: YOUR EMAIL" />
+                  <Label fx:id="userPhoneDisplay" layoutX="184.0" layoutY="159.0" text="Phone: YOUR PHONE NUMBER" />
+                  <Label fx:id="userAddressDisplay" layoutX="152.0" layoutY="215.0" text="Address: YOUR ADDRESS HERE" />
+                  <Label fx:id="userContactDisplay" layoutX="152.0" layoutY="243.0" text="Contact Info: YOUR CONTACT INFO HERE" />
+               </children>
+            </FlowPane>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
